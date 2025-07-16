@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Ultimate Guitar Mastery Path - Tracker + Guide</title>
+  <style>
+    :root {
+      --orange: #f97316;
+      --orange-light: #fb923c;
+      --yellow: #facc15;
+      --background-dark: #121212;
+      --card-bg-dark: #1e293b;
+      --text-color-dark: #eee;
+      --text-muted-dark: #777;
+
+      --background-light: #fafafa;
+      --card-bg-light: #ffffff;
+      --text-color-light: #222;
+      --text-muted-light: #555;
+
+      --checkbox-size: 24px;
+    }
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0; padding: 1rem;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--background-dark);
+      color: var(--text-color-dark);
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      user-select: none;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    body.light {
+      background: var(--background-light);
+      color: var(--text-color-light);
+    }
+    h1, h2 {
+      color: var(--orange);
+      margin-bottom: 0.2rem;
+      transition: color 0.3s ease;
+    }
+    body.light h1, body.light h2 {
+      color: var(--orange-light);
+    }
+    h3 {
+      color: var(--orange-light);
+      margin-top: 1rem;
+      margin-bottom: 0.3rem;
+      transition: color 0.3s ease;
+    }
+    a {
+      color: var(--yellow);
+      text-decoration: none;
+      word-break: break-word;
+      transition: color 0.3s ease;
+    }
+    a:hover, a:focus {
+      text-decoration: underline;
+    }
+    .level, .exercise-card {
+      background: var(--card-bg-dark);
+      border-radius: 12px;
+      padding: 1rem 1.2rem 1.5rem 1.2rem;
+      margin: 1rem 0;
+      box-shadow: 0 0 10px rgba(255 255 255 / 0.1);
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+    body.light .level, body.light .exercise-card {
+      background: var(--card-bg-light);
+      box-shadow: 0 0 10px rgba(0 0 0 / 0.1);
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 0;
+      margin-bottom: 0.7rem;
+    }
+    li {
+      margin: 0.4rem 0;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      font-size: 1rem;
+      gap: 0.8rem;
+      transition: color 0.3s ease;
+    }
+    input[type="checkbox"] {
+      width: var(--checkbox-size);
+      height: var(--checkbox-size);
+      cursor: pointer;
+      flex-shrink: 0;
+      border-radius: 6px;
+      border: 2px solid var(--orange-light);
+      background-color: transparent;
+      appearance: none;
+      -webkit-appearance: none;
+      position: relative;
+      outline-offset: 2px;
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+    input[type="checkbox"]:checked {
+      background-color: var(--orange);
+      border-color: var(--orange);
+    }
+    input[type="checkbox"]:checked::after {
+      content: '✓';
+      position: absolute;
+      color: white;
+      font-weight: bold;
+      font-size: 1.3rem;
+      left: 4px;
+      top: 0;
+      user-select: none;
+    }
+    .goal {
+      font-style: italic;
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--text-muted-dark);
+      font-size: 1rem;
+      transition: color 0.3s ease;
+    }
+    body.light .goal {
+      color: var(--text-muted-light);
+    }
+    .progress-bar {
+      width: 100%;
+      background: #374151;
+      height: 10px;
+      border-radius: 20px;
+      overflow: hidden;
+      margin-top: 0.5rem;
+      margin-bottom: 1rem;
+      transition: background-color 0.3s ease;
+    }
+    body.light .progress-bar {
+      background: #ddd;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--orange);
+      width: 0%;
+      transition: width 0.4s ease;
+      border-radius: 20px;
+    }
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      font-size: 0.9rem;
+      color: var(--text-muted-dark);
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    body.light footer {
+      color: var(--text-muted-light);
+    }
+    button {
+      background: var(--orange);
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-weight: bold;
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      user-select: none;
+      margin: 0.5rem 0;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    }
+    button:hover, button:focus {
+      background: var(--orange-light);
+      outline: none;
+    }
+    .top-controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .timer {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted-dark);
+      user-select: none;
+      transition: color 0.3s ease;
+    }
+    body.light .timer {
+      color: var(--text-muted-light);
+    }
+    .timer-controls {
+      margin-top: 0.5rem;
+    }
+    .timer-controls button {
+      padding: 0.4rem 0.9rem;
+      font-size: 0.9rem;
+      margin-right: 0.5rem;
+    }
+    /* Mobile tweaks */
+    @media (max-width: 600px) {
+      body {
+        padding: 1rem 0.5rem;
+      }
+      label {
+        font-size: 1.1rem;
+      }
+      input[type="checkbox"] {
+        width: 28px;
+        height: 28px;
+      }
+      .top-controls {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      button {
+        width: 100%;
+      }
+      .timer-controls button {
+        width: 48%;
+        margin-bottom: 0.5rem;
+      }
+      .tab-buttons button {
+        flex: 1 1 50%;
+      }
+    }
+
+    /* Tabs styling */
+    .tab-buttons {
+      display: flex;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+    .tab-buttons button {
+      flex: 1;
+      background: var(--card-bg-dark);
+      color: var(--text-color-dark);
+      border: 2px solid transparent;
+      border-bottom: 3px solid transparent;
+      font-weight: 600;
+      font-size: 1.1rem;
+      padding: 0.7rem 0;
+      cursor: pointer;
+      transition: background-color 0.3s ease, border-color 0.3s ease;
+      border-radius: 12px 12px 0 0;
+    }
+    body.light .tab-buttons button {
+      background: var(--card-bg-light);
+      color: var(--text-color-light);
+    }
+    .tab-buttons button.active {
+      border-color: var(--orange);
+      background: var(--background-dark);
+      color: var(--orange);
+      box-shadow: inset 0 -3px 0 var(--orange);
+    }
+    body.light .tab-buttons button.active {
+      background: var(--background-light);
+      color: var(--orange-light);
+      box-shadow: inset 0 -3px 0 var(--orange-light);
+    }
+
+    .tab-content > div {
+      display: none;
+    }
+    .tab-content > div.active {
+      display: block;
+    }
+
+    /* Exercise card layout */
+    .exercise-card {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+    .exercise-card img {
+      width: 140px;
+      height: 90px;
+      object-fit: cover;
+      border-radius: 8px;
+      flex-shrink: 0;
+      user-select: none;
+      border: 2px solid var(--orange-light);
+      transition: border-color 0.3s ease;
+    }
+    body.light .exercise-card img {
+      border-color: var(--orange);
+    }
+    .exercise-info {
+      flex: 1;
+    }
+    .exercise-info h4 {
+      margin: 0 0 0.4rem 0;
+      color: var(--orange-light);
+    }
+    body.light .exercise-info h4 {
+      color: var(--orange);
+    }
+    .exercise-info p {
+      margin: 0.2rem 0;
+      font-size: 0.9rem;
+      color: var(--text-muted-dark);
+    }
+    body.light .exercise-info p {
+      color: var(--text-muted-light);
+    }
+    .exercise-info a {
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 0.3rem;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-controls">
+    <button id="reset-progress-btn" aria-label="Reset all progress">🔄 Reset Progress</button>
+    <button id="toggle-theme-btn" aria-label="Toggle dark/light mode">🌙 Toggle Dark/Light Mode</button>
+  </div>
+
+  <h1>Ultimate Guitar Mastery Path</h1>
+  <p>Track your progress through combined foundational & shred guitar lessons.<br />
+  Click links to watch exercises, check off completed goals, and level up!</p>
+
+  <div class="tab-buttons" role="tablist" aria-label="Toggle between Progress Tracker and Exercise Guide">
+    <button role="tab" aria-selected="true" aria-controls="progress-tab" id="progress-tab-btn" class="active">Progress Tracker</button>
+    <button role="tab" aria-selected="false" aria-controls="guide-tab" id="guide-tab-btn">Exercise Guide</button>
+  </div>
+
+  <div class="tab-content">
+    <div id="progress-tab" role="tabpanel" aria-labelledby="progress-tab-btn" class="active">
+      <div id="levels-container"></div>
+    </div>
+
+    <div id="guide-tab" role="tabpanel" aria-labelledby="guide-tab-btn" tabindex="0">
+      <div id="exercise-guide-container"></div>
+    </div>
+  </div>
+
+  <footer>Made with 🎸 by ChatGPT</footer>
+
+<script>
+  // Data
+  const levels = [
+    {
+      id: "level1",
+      title: "LEVEL 1 – Core Mechanics & Rhythm Foundations",
+      goal: "Play clean open chords, barre chords, and keep steady rhythm at 60 bpm",
+      skills: [
+        "Open chords: E, A, D, C, G, Em, Am, Dm",
+        "Basic barre chords (F major shape on 1st fret)",
+        "Basic strumming patterns: downstrokes, down-up",
+        "Use metronome at 60 bpm, play steady 4/4 rhythm"
+      ],
+      exercises: [
+        { id: "ex0", text: "JustinGuitar Grade 1 Beginner Course (Lessons 1–10)", url: "https://www.justinguitar.com/categories/beginner-guitar-lessons-grade-1", 
+          img: "https://i.ytimg.com/vi/7nRM95rPoYc/maxresdefault.jpg",
+          description: "Follow the beginner course focusing on open chords and rhythm.",
+          goal: "Master open chords and smooth chord transitions."
+        },
+        { id: "ex1", text: "Basic strumming patterns (JustinGuitar)", url: "https://www.justinguitar.com/guitar-lessons/basic-strumming-patterns-bc-000", 
+          img: "https://i.ytimg.com/vi/qNjH3XbJxnk/maxresdefault.jpg",
+          description: "Practice downstrokes and down-up strumming patterns with metronome.",
+          goal: "Develop consistent rhythm and timing."
+        },
+        { id: "ex2", text: "Metronome practice intro (JustinGuitar)", url: "https://www.justinguitar.com/guitar-lessons/using-a-metronome-bc-000",
+          img: "https://i.ytimg.com/vi/nZlN_dNH4Gk/maxresdefault.jpg",
+          description: "Learn to use a metronome to keep steady tempo while playing.",
+          goal: "Stay in time and build rhythmic precision."
+        }
+      ],
+      bossFight: {
+        id: "boss",
+        text: "Play 'Wish You Were Here' intro cleanly",
+        url: "https://www.justinguitar.com/guitar-lessons/wish-you-were-here-paul-mccartney-bc-002",
+        img: "https://i.ytimg.com/vi/4Zjh_ZvLaJ0/maxresdefault.jpg",
+        description: "Practice the intro riff with clean tone and steady rhythm.",
+        goal: "Demonstrate clean chord changes and timing."
+      }
+    },
+    {
+      id: "level2",
+      title: "LEVEL 2 – Expanding Chords & Basic Lead",
+      goal: "Play barre chords cleanly and improvise simple 12-bar blues solo with pentatonics at 70 bpm",
+      skills: [
+        "Barre chords up and down neck (F, Bm, etc.)",
+        "5 basic pentatonic box shapes in A minor and C major",
+        "Palm muting for rhythm control",
+        "Improvise 12-bar blues using pentatonic boxes over backing track"
+      ],
+      exercises: [
+        { id: "ex0", text: "JustinGuitar Grade 4 – Barre chords & pentatonic scale", url: "https://www.justinguitar.com/categories/intermediate-guitar-lessons-grade-4",
+          img: "https://i.ytimg.com/vi/zwC_-Vq7UtE/maxresdefault.jpg",
+          description: "Work on barre chord technique and basic pentatonic scale shapes.",
+          goal: "Play barre chords cleanly and familiarize pentatonic shapes."
+        },
+        { id: "ex1", text: "Pentatonic box 1 practice & improv", url: "https://www.justinguitar.com/guitar-lessons/minor-pentatonic-scale-box-1-bm-000",
+          img: "https://i.ytimg.com/vi/0b2PRe1z4i0/maxresdefault.jpg",
+          description: "Practice box 1 pentatonic scale and improvise simple licks.",
+          goal: "Create melodies using pentatonic scale box 1."
+        },
+        { id: "ex2", text: "Palm muting basics", url: "https://www.justinguitar.com/guitar-lessons/palm-muting-bm-000",
+          img: "https://i.ytimg.com/vi/FuTVvlnF-HI/maxresdefault.jpg",
+          description: "Learn palm muting technique to control note sustain.",
+          goal: "Add dynamics and rhythm control to playing."
+        },
+        { id: "ex3", text: "Blues backing track (A, 70 bpm)", url: "https://www.youtube.com/watch?v=ev0uHK0YyXc",
+          img: "https://img.youtube.com/vi/ev0uHK0YyXc/0.jpg",
+          description: "Jam along with this backing track to improvise blues solos.",
+          goal: "Apply pentatonic improvisation in real context."
+        }
+      ],
+      bossFight: {
+        id: "boss",
+        text: "Improvise a 12-bar blues solo over backing track cleanly",
+        url: "https://www.youtube.com/watch?v=ev0uHK0YyXc",
+        img: "https://img.youtube.com/vi/ev0uHK0YyXc/0.jpg",
+        description: "Show your skills by soloing over a classic 12-bar blues.",
+        goal: "Use pentatonic scales with rhythmic phrasing."
+      }
+    },
+    // ... [Keep the rest of levels unchanged, add img, description, goal for all exercises and bossFight]
+    {
+      id: "level3",
+      title: "LEVEL 3 – Lead Foundations & Speed Basics",
+      goal: "Play alternate picking cleanly at 100 bpm; execute legato runs smoothly at 90 bpm",
+      skills: [
+        "Clean alternate picking on chromatic runs",
+        "Hammer-ons and pull-offs for legato playing",
+        "Simple phrasing using pentatonic and major scale fragments"
+      ],
+      exercises: [
+        { id: "ex0", text: "Ben Eller Chromatic alternate picking drill", url: "https://www.youtube.com/watch?v=3YvcF3yDjV4",
+          img: "https://img.youtube.com/vi/3YvcF3yDjV4/0.jpg",
+          description: "Practice chromatic alternate picking patterns for speed and accuracy.",
+          goal: "Improve right-hand picking precision and speed."
+        },
+        { id: "ex1", text: "Legato basics (JamPlay)", url: "https://www.jamplay.com/lessons/23664-intro-to-legato-techniques",
+          img: "https://jamplay-wpengine.netdna-ssl.com/wp-content/uploads/2019/07/legato-slide1.jpg",
+          description: "Learn hammer-ons, pull-offs, and smooth note transitions.",
+          goal: "Develop smooth legato phrasing."
+        },
+        { id: "ex2", text: "Pentatonic phrasing & licks (JustinGuitar)", url: "https://www.justinguitar.com/guitar-lessons/lead-guitar-pentatonic-licks-bm-000",
+          img: "https://i.ytimg.com/vi/_d1APa8k4TA/maxresdefault.jpg",
+          description: "Study melodic phrasing using pentatonic scales.",
+          goal: "Play melodic, musical lead lines."
+        }
+      ],
+      bossFight: {
+        id: "boss",
+        text: "Play the intro solo of 'Sweet Child O' Mine' (Slash)",
+        url: "https://www.youtube.com/watch?v=1w7OgIMMRc4",
+        img: "https://img.youtube.com/vi/1w7OgIMMRc4/0.jpg",
+        description: "Learn Slash's iconic intro solo with clean execution.",
+        goal: "Show alternate picking and phrasing control."
+      }
+    },
+    {
+      id: "level4",
+      title: "LEVEL 4 – Shredding & Advanced Techniques",
+      goal: "Execute sweep picking arpeggios, tremolo picking, and two-handed tapping at 120 bpm",
+      skills: [
+        "Sweep picking arpeggios",
+        "Tremolo picking",
+        "Two-handed tapping techniques",
+        "String skipping and hybrid picking basics"
+      ],
+      exercises: [
+        { id: "ex0", text: "Sweep picking arpeggios (Paul Gilbert)", url: "https://www.youtube.com/watch?v=2Zc7zFkaXp4",
+          img: "https://img.youtube.com/vi/2Zc7zFkaXp4/0.jpg",
+          description: "Learn the basic sweep picking arpeggio patterns and exercises.",
+          goal: "Build smooth sweep picking technique."
+        },
+        { id: "ex1", text: "Tremolo picking basics", url: "https://www.justinguitar.com/guitar-lessons/tremolo-picking-bm-000",
+          img: "https://i.ytimg.com/vi/kRmUk8qNROk/maxresdefault.jpg",
+          description: "Develop rapid alternate picking on a single note.",
+          goal: "Increase picking speed and stamina."
+        },
+        { id: "ex2", text: "Two-handed tapping exercise", url: "https://www.youtube.com/watch?v=GTj3FqltzzY",
+          img: "https://img.youtube.com/vi/GTj3FqltzzY/0.jpg",
+          description: "Practice right-hand tapping and integrating into phrases.",
+          goal: "Expand your tapping vocabulary."
+        },
+        { id: "ex3", text: "String skipping & hybrid picking intro", url: "https://www.justinguitar.com/guitar-lessons/hybrid-picking-bm-000",
+          img: "https://i.ytimg.com/vi/63hGmu_OWXI/maxresdefault.jpg",
+          description: "Work on skipping strings and using hybrid picking for clarity.",
+          goal: "Add articulation and precision to leads."
+        }
+      ],
+      bossFight: {
+        id: "boss",
+        text: "Play Paul Gilbert’s 'Scarified' solo",
+        url: "https://www.youtube.com/watch?v=4fWz5U0pR70",
+        img: "https://img.youtube.com/vi/4fWz5U0pR70/0.jpg",
+        description: "Master this challenging shred solo showcasing sweep and speed.",
+        goal: "Demonstrate advanced technique and speed."
+      }
+    }
+  ];
+
+  // Save/load progress & timer data
+  function saveProgress(levelId, itemId, checked) {
+    const data = JSON.parse(localStorage.getItem("guitarProgress") || "{}");
+    if (!data[levelId]) data[levelId] = {};
+    data[levelId][itemId] = checked;
+    localStorage.setItem("guitarProgress", JSON.stringify(data));
+    updateProgress(levelId);
+  }
+
+  function loadProgress() {
+    return JSON.parse(localStorage.getItem("guitarProgress") || "{}");
+  }
+
+  function updateProgress(levelId) {
+    const data = loadProgress();
+    const levelData = data[levelId] || {};
+    const checkboxes = document.querySelectorAll(`.level[data-id="${levelId}"] input[type="checkbox"]`);
+    let completed = 0;
+    checkboxes.forEach(cb => {
+      if (cb.checked) completed++;
+    });
+    const progressPercent = Math.round((completed / checkboxes.length) * 100);
+    const progressFill = document.querySelector(`.level[data-id="${levelId}"] .progress-fill`);
+    if (progressFill) progressFill.style.width = progressPercent + "%";
+  }
+
+  // Timer utility functions
+  function formatTime(ms) {
+    let totalSeconds = Math.floor(ms / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    totalSeconds %= 3600;
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    if (hours > 0) {
+      return `${hours}h ${minutes}m ${seconds}s`;
+    } else if (minutes > 0) {
+      return `${minutes}m ${seconds}s`;
+    } else {
+      return `${seconds}s`;
+    }
+  }
+
+  // Load and save timer data
+  function saveTimer(levelId, time) {
+    const timers = JSON.parse(localStorage.getItem("guitarTimers") || "{}");
+    timers[levelId] = time;
+    localStorage.setItem("guitarTimers", JSON.stringify(timers));
+  }
+
+  function loadTimer(levelId) {
+    const timers = JSON.parse(localStorage.getItem("guitarTimers") || "{}");
+    return timers[levelId] || 0;
+  }
+
+  // Render levels & UI
+  const container = document.getElementById("levels-container");
+
+  function renderLevels() {
+    levels.forEach(level => {
+      const div = document.createElement("div");
+      div.className = "level";
+      div.dataset.id = level.id;
+
+      div.innerHTML = `
+        <h2>${level.title}</h2>
+        <p class="goal"><strong>Goal:</strong> ${level.goal}</p>
+        <h3>Skills to Master:</h3>
+        <ul>${level.skills.map(skill => `<li>• ${skill}</li>`).join("")}</ul>
+        <h3>Exercises:</h3>
+        <ul>
+          ${level.exercises.map(ex => `
+            <li>
+              <label>
+                <input type="checkbox" id="${level.id}-${ex.id}" />
+                <a href="${ex.url}" target="_blank" rel="noopener noreferrer">${ex.text}</a>
+              </label>
+            </li>
+          `).join("")}
+        </ul>
+        <h3>Boss Fight:</h3>
+        <label>
+          <input type="checkbox" id="${level.id}-${level.bossFight.id}" />
+          <a href="${level.bossFight.url}" target="_blank" rel="noopener noreferrer">${level.bossFight.text}</a>
+        </label>
+
+        <div class="progress-bar" aria-label="Progress bar for ${level.title}">
+          <div class="progress-fill"></div>
+        </div>
+
+        <div class="timer" id="${level.id}-timer-display" aria-live="polite" aria-atomic="true" aria-label="Practice timer">Practice time: 0s</div>
+        <div class="timer-controls">
+          <button aria-label="Start practice timer for ${level.title}" id="${level.id}-timer-start">▶️ Start</button>
+          <button aria-label="Pause practice timer for ${level.title}" id="${level.id}-timer-pause" disabled>⏸ Pause</button>
+          <button aria-label="Reset practice timer for ${level.title}" id="${level.id}-timer-reset">🔄 Reset Timer</button>
+        </div>
+      `;
+
+      container.appendChild(div);
+
+      // Load saved progress
+      const savedData = loadProgress();
+      if (savedData[level.id]) {
+        Object.entries(savedData[level.id]).forEach(([itemId, checked]) => {
+          const checkbox = document.getElementById(level.id + "-" + itemId);
+          if (checkbox) checkbox.checked = checked;
+        });
+      }
+
+      // Update progress bar on load
+      updateProgress(level.id);
+
+      // Setup timer UI & logic
+      setupTimer(level.id);
+    });
+
+    // Add event listeners for checkboxes
+    container.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+      checkbox.addEventListener("change", e => {
+        const idParts = e.target.id.split("-");
+        const levelId = idParts[0];
+        const itemId = idParts.slice(1).join("-");
+        saveProgress(levelId, itemId, e.target.checked);
+      });
+    });
+  }
+
+  // Timer per level management
+  const timers = {}; // { levelId: { timeElapsedMs, timerId, running } }
+
+  function setupTimer(levelId) {
+    const display = document.getElementById(`${levelId}-timer-display`);
+    const btnStart = document.getElementById(`${levelId}-timer-start`);
+    const btnPause = document.getElementById(`${levelId}-timer-pause`);
+    const btnReset = document.getElementById(`${levelId}-timer-reset`);
+
+    let elapsed = loadTimer(levelId);
+    timers[levelId] = { timeElapsedMs: elapsed, timerId: null, running: false };
+
+    function updateDisplay() {
+      display.textContent = `Practice time: ${formatTime(timers[levelId].timeElapsedMs)}`;
+    }
+    updateDisplay();
+
+    function tick() {
+      timers[levelId].timeElapsedMs += 1000;
+      updateDisplay();
+      saveTimer(levelId, timers[levelId].timeElapsedMs);
+    }
+
+    btnStart.addEventListener("click", () => {
+      if (!timers[levelId].running) {
+        timers[levelId].timerId = setInterval(tick, 1000);
+        timers[levelId].running = true;
+        btnStart.disabled = true;
+        btnPause.disabled = false;
+      }
+    });
+
+    btnPause.addEventListener("click", () => {
+      if (timers[levelId].running) {
+        clearInterval(timers[levelId].timerId);
+        timers[levelId].running = false;
+        btnStart.disabled = false;
+        btnPause.disabled = true;
+      }
+    });
+
+    btnReset.addEventListener("click", () => {
+      clearInterval(timers[levelId].timerId);
+      timers[levelId].timeElapsedMs = 0;
+      timers[levelId].running = false;
+      updateDisplay();
+      saveTimer(levelId, 0);
+      btnStart.disabled = false;
+      btnPause.disabled = true;
+    });
+  }
+
+  // Reset all progress and timers
+  document.getElementById("reset-progress-btn").addEventListener("click", () => {
+    if (confirm("Are you sure you want to reset ALL progress and timers? This cannot be undone.")) {
+      localStorage.removeItem("guitarProgress");
+      localStorage.removeItem("guitarTimers");
+      location.reload();
+    }
+  });
+
+  // Dark/Light mode toggle
+  const toggleBtn = document.getElementById("toggle-theme-btn");
+  function setTheme(theme) {
+    if (theme === "light") {
+      document.body.classList.add("light");
+      toggleBtn.textContent = "🌙 Toggle Dark/Light Mode";
+      localStorage.setItem("guitarTheme", "light");
+    } else {
+      document.body.classList.remove("light");
+      toggleBtn.textContent = "☀️ Toggle Dark/Light Mode";
+      localStorage.setItem("guitarTheme", "dark");
+    }
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    if (document.body.classList.contains("light")) {
+      setTheme("dark");
+    } else {
+      setTheme("light");
+    }
+  });
+
+  // Load saved theme on start
+  (function() {
+    const savedTheme = localStorage.getItem("guitarTheme");
+    if (savedTheme === "light") {
+      setTheme("light");
+    } else {
+      setTheme("dark");
+    }
+  })();
+
+  // Initialize page
+  renderLevels();
+
+  // --- Tab switching ---
+  const progressTabBtn = document.getElementById("progress-tab-btn");
+  const guideTabBtn = document.getElementById("guide-tab-btn");
+  const progressTab = document.getElementById("progress-tab");
+  const guideTab = document.getElementById("guide-tab");
+
+  progressTabBtn.addEventListener("click", () => {
+    progressTabBtn.classList.add("active");
+    guideTabBtn.classList.remove("active");
+    progressTab.classList.add("active");
+    guideTab.classList.remove("active");
+  });
+
+  guideTabBtn.addEventListener("click", () => {
+    guideTabBtn.classList.add("active");
+    progressTabBtn.classList.remove("active");
+    guideTab.classList.add("active");
+    progressTab.classList.remove("active");
+  });
+
+  // Render exercise guide
+  const guideContainer = document.getElementById("exercise-guide-container");
+
+  function renderExerciseGuide() {
+    let html = "";
+    levels.forEach(level => {
+      html += `<h2>${level.title}</h2>`;
+      level.exercises.forEach(ex => {
+        html += `
+          <div class="exercise-card" role="group" aria-label="${ex.text} exercise details">
+            <img src="${ex.img}" alt="Thumbnail for ${ex.text}" loading="lazy" />
+            <div class="exercise-info">
+              <h4>${ex.text}</h4>
+              <p><strong>Goal:</strong> ${ex.goal}</p>
+              <p><strong>How to do it:</strong> ${ex.description}</p>
+              <a href="${ex.url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${ex.text} video or page">▶️ Watch Exercise</a>
+            </div>
+          </div>
+        `;
+      });
+      // Boss fight exercise details
+      const b = level.bossFight;
+      html += `
+        <div class="exercise-card" role="group" aria-label="Boss fight exercise: ${b.text}">
+          <img src="${b.img}" alt="Thumbnail for boss fight ${b.text}" loading="lazy" />
+          <div class="exercise-info">
+            <h4>${b.text} (Boss Fight)</h4>
+            <p><strong>Goal:</strong> ${b.goal}</p>
+            <p><strong>How to do it:</strong> ${b.description}</p>
+            <a href="${b.url}" target="_blank" rel="noopener noreferrer" aria-label="Open ${b.text} video or page">▶️ Watch Boss Fight</a>
+          </div>
+        </div>
+      `;
+    });
+    guideContainer.innerHTML = html;
+  }
+
+  renderExerciseGuide();
+
+</script>
+
+</body>
+</html>
